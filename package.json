@@ -9,14 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rchidana/NodeApp"
+    "url": "https://github.com/inforviotech/cdci-pipeline"
+    
   },
   "keywords": [
     "node",
     "docker",
     "dockerfile"
   ],
-  "author": "crudsinfotechng@gmail.com",
+  "author": "vaithee@loanwiser.in",
   "license": "ISC",
   "devDependencies": { "test": ">=0.6.0" }
 }
