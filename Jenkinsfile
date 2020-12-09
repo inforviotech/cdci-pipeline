@@ -1,33 +1,65 @@
-node {
-    def app
-
-    stage('Clone repository') {
-        /*  test Cloning the Repository to our Workspace */
-
-        checkout scm
+pipeline {
+    agent { 
+        docker { 
+            image 'node:12.16.2'
+            args '-p 3333:3333'
+        } 
     }
-
-    stage('Build image') {
-        /* This builds the actual image */
-
-        app = docker.build("inforvio/nodeapp")
-    }
-
-    stage('Test image') {
-        
-        app.inside {
-            echo "Tests passed"
+    
+   stages {
+        stage('Build') {
+            steps {
+                sh 'node --version'
+                sh 'npm install'
+                sh 'npm run build'
+            }
         }
-    }
+       
 
-    stage('Push image') {
-        /* 
-			You would need to first register with DockerHub before you can push images to your account
-		*/
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
-            } 
-                echo "Trying to Push Docker Build to DockerHub"
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// node {
+//     def app
+
+//     stage('Clone repository') {
+//         /*  test Cloning the Repository to our Workspace */
+
+//         checkout scm
+//     }
+
+//     stage('Build image') {
+//         /* This builds the actual image */
+
+//         app = docker.build("inforvio/nodeapp")
+//     }
+
+//     stage('Test image') {
+        
+//         app.inside {
+//             echo "Tests passed"
+//         }
+//     }
+
+//     stage('Push image') {
+//         /* 
+// 			You would need to first register with DockerHub before you can push images to your account
+// 		*/
+//         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
+//             app.push("${env.BUILD_NUMBER}")
+//             app.push("latest")
+//             } 
+//                 echo "Trying to Push Docker Build to DockerHub"
+//     }
+// }
